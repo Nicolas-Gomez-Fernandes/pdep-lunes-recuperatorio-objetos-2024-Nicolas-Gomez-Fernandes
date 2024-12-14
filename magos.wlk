@@ -33,6 +33,9 @@ class Mago {
         energiaMagica -= energiaMagica * unPorcentaje
     }
 
+    method robarPuntosDeEnergiaMagica(otroMago)  = rangoMagico.robarPuntosDeEnergiaMagica(otroMago)
+    
+
 }
 
 object aprendiz {
