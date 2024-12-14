@@ -4,7 +4,7 @@ class Mago {
     const poderInnato
     const resistenciaMagica
     var energiaMagica
-    var rangoMagico
+    var rangoMagico // aprendiz, veterano o inmortal
 
     method nombre() = nombre
 
@@ -17,10 +17,10 @@ class Mago {
     method cantidadDePoderMagicoDeLosObjetosEquipadosDe(mago) = objetosMagicos.sum({ objeto => objeto.poderDelObjetoDe(mago) })
 
     method desafiarA(otroMago){
-        if(rangoMagico.ganarUnEnfrentaminetoEntre(self, otroMago)){
+        if(rangoMagico.ganarUnEnfrentamientoEntre(self, otroMago)){
 
-            rangoMagico.robarPuntosDeEnergiaMagica(otroMago)
-            self.almacenarPuntosDeEnergiaMagica(rangoMagico.robarPuntosDeEnergiaMagica(otroMago))
+            rangoMagico.robarPuntosDeEnergiaMagicaA(otroMago)
+            self.almacenarPuntosDeEnergiaMagica(rangoMagico.robarPuntosDeEnergiaMagicaA(otroMago))
 
         }
     }
@@ -33,25 +33,37 @@ class Mago {
         energiaMagica -= energiaMagica * unPorcentaje
     }
 
-    method robarPuntosDeEnergiaMagica(otroMago)  = rangoMagico.robarPuntosDeEnergiaMagica(otroMago)
+    method cantidadARobarDePuntosDeEnergiaMagica(mago) = rangoMagico.cantidadDePuntosDeEnergiaMagicaARobarA(mago) 
+    
+    method cambiarDeRango(nuevoRango){
+        rangoMagico = nuevoRango
+    }
     
 
 }
 
 object aprendiz {
-    method ganarUnEnfrentaminetoEntre(unMago, magoAprendiz) = unMago.resistenciaMagica() > magoAprendiz.poderTotal()
+    method ganarUnEnfrentamientoEntre(unMago, unMagoAprendiz) = unMagoAprendiz.resistenciaMagica() < unMago.poderTotal()
 
-    method robarPuntosDeEnergiaMagica(magoAprendiz) = magoAprendiz.perderUnPorcetajeDeSuPoderMagico(0.5)
+    method robarPuntosDeEnergiaMagicaA(unMagoAprendiz) {
+        unMagoAprendiz.perderUnPorcetajeDeSuPoderMagico(0.5)
+    }
+
+    method cantidadDePuntosDeEnergiaMagicaARobarA(unMago) = unMago.energiaMagica() * 0.5
 
 }
 
 
 object veterano {
-    method ganarUnEnfrentaminetoEntre(unMago, magoVeterano) = unMago.poderTotal() > magoVeterano.resistenciaMagica() * 1.5
+    method ganarUnEnfrentamientoEntre(unMago, unMagoVeterano) = unMago.poderTotal() >= unMagoVeterano.resistenciaMagica() * 1.5
 
-    method robarPuntosDeEnergiaMagica(magoVeterano) = magoVeterano.perderUnPorcetajeDeSuPoderMagico(0.25)
+    method robarPuntosDeEnergiaMagicaA(unMagoVeterano){
+        unMagoVeterano.perderUnPorcetajeDeSuPoderMagico(0.25)
+    }
+
+    method cantidadDePuntosDeEnergiaMagicaARobarA(unMago) = unMago.energiaMagica() * 0.25
 }
 
 object inmortal {
-    method ganarUnEnfrentaminetoEntre(unMago, magoInmortal) = false 
+    method ganarUnEnfrentamientoEntre(unMago, unMagoInmortal) = false 
 }

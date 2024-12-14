@@ -9,7 +9,9 @@ class Gremio {
 
     method desafiarA(desafiado) {
         if(self.ganarUnEnfrentaminetoAl(desafiado)){
+
             self.aumentarReservaMagicaDelLider(self.puntosTotalesRobadosAlDesafiado(desafiado))
+
         }
     }
 
@@ -21,5 +23,5 @@ class Gremio {
         self.liderDelGremio().almacenarPuntosDeEnergiaMagica(unaCantidad)
     }
 
-    method puntosTotalesRobadosAlDesafiado(desafiado) = desafiado.sum({ mago => mago.robarPuntosDeEnergiaMagica(mago) })
+    method puntosTotalesRobadosAlDesafiado(desafiado) = desafiado.sum({ mago => mago.cantidadARobarDePuntosDeEnergiaMagica(mago) })
 }
