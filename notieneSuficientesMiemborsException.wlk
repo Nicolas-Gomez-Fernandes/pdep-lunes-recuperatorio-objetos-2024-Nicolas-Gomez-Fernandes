@@ -1,0 +1,3 @@
+class NotieneSuficientesMiemborsException inherits Exception {
+  
+}
